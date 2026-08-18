@@ -5,7 +5,12 @@ import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-	plugins: [omniSvelte(), 
+	plugins: [omniSvelte({
+		auth: {
+			enabled: true,
+			emailAndPassword: { enabled: true, autoSignIn: true }
+		}
+	}), 
 		tailwindcss(),
 		sveltekit({
 			compilerOptions: {
