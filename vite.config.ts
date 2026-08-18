@@ -9,6 +9,14 @@ export default defineConfig({
 		auth: {
 			enabled: true,
 			emailAndPassword: { enabled: true, autoSignIn: true }
+		},
+		schema: {
+			input: { patterns: ['src/**/*.schema.ts'] },
+			output: {
+				drizzle: { path: 'src/lib/db/server/schema.ts', format: 'single-file' },
+				zod: { path: 'src/lib/db/validation', format: 'per-schema' },
+				model: { path: 'src/lib/db/models', format: 'per-schema' }
+			}
 		}
 	}), 
 		tailwindcss(),
