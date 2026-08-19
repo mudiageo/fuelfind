@@ -7,7 +7,10 @@ export const user = pgTable("user", {
   emailVerified: boolean('emailVerified').notNull().default(false),
   image: text('image'),
   createdAt: timestamp('createdAt', { mode: 'date' }).notNull().defaultNow(),
-  updatedAt: timestamp('updatedAt', { mode: 'date' }).notNull().defaultNow()
+  updatedAt: timestamp('updatedAt', { mode: 'date' }).notNull().defaultNow(),
+  username: text('username').unique(),
+  displayUsername: text('displayUsername'),
+  twoFactorEnabled: boolean('twoFactorEnabled').default(false)
 });
 
 export const session = pgTable("session", {
@@ -44,5 +47,15 @@ export const verification = pgTable("verification", {
   expiresAt: timestamp('expiresAt', { mode: 'date' }).notNull(),
   createdAt: timestamp('createdAt', { mode: 'date' }).notNull().defaultNow(),
   updatedAt: timestamp('updatedAt', { mode: 'date' }).notNull().defaultNow()
+});
+
+export const twoFactor = pgTable("twoFactor", {
+  id: text('id').primaryKey(),
+  secret: text('secret').notNull(),
+  backupCodes: text('backupCodes').notNull(),
+  userId: text('userId').notNull().references(() => user.id, { onDelete: 'cascade' }),
+  verified: boolean('verified').default(true),
+  failedVerificationCount: integer('failedVerificationCount').default(0),
+  lockedUntil: timestamp('lockedUntil', { mode: 'date' })
 });
 

@@ -1,24 +1,23 @@
-import { defineSchema, field } from 'omni-svelte/schema';
+import { defineSchema } from 'omni-svelte/schema';
 
 export const station = defineSchema('stations', {
-  id: field.serial().primaryKey(),
-  name: field.string(255).required(),
-  brand: field.string(255).optional(),
-  address: field.string().required(),
-  lat: field.string().required(),
-  lng: field.string().required(),
+  id: { type: 'serial', primary: true },
+  name: { type: 'string', length: 255, required: true },
+  brand: { type: 'string', length: 255 },
+  address: { type: 'string', required: true },
+  lat: { type: 'string', required: true },
+  lng: { type: 'string', required: true }
 }, {
-  timestamps: true,
+  timestamps: true
 });
 
 export const priceReport = defineSchema('price_reports', {
-  id: field.serial().primaryKey(),
-  stationId: field.integer().required(), 
-  userId: field.string(255).required(),  
-  fuelType: field.enum('pms', 'diesel', 'kerosene').required(),
-  pricePerLiter: field.integer().required(), 
-  hasFuel: field.boolean().default(true), 
+  id: { type: 'serial', primary: true },
+  stationId: { type: 'integer', required: true }, 
+  userId: { type: 'string', length: 255, required: true },  
+  fuelType: { type: 'string', required: true },
+  pricePerLiter: { type: 'integer', required: true }, 
+  hasFuel: { type: 'boolean', default: 'true' }
 }, {
-  timestamps: true,
-  indexes: ['stationId', 'created_at']
+  timestamps: true
 });
