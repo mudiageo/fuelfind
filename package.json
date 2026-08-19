@@ -19,6 +19,7 @@
     "@sveltejs/vite-plugin-svelte": "^7.1.2",
     "@tailwindcss/vite": "^4.3.0",
     "clsx": "^2.1.1",
+    "drizzle-kit": "^0.31.10",
     "shadcn-svelte": "^1.5.0",
     "svelte": "^5.56.4",
     "svelte-check": "^4.7.5",
@@ -30,6 +31,7 @@
     "vite": "^8.0.16"
   },
   "dependencies": {
+    "drizzle-orm": "^0.45.2",
     "omni-svelte": "^0.2.0"
   },
   "devEngines": {
