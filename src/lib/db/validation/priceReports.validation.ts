@@ -1,6 +1,6 @@
 import { z } from 'omni-svelte/validation';
 
-export const price_reportsCreateSchema = z.object({
+export const priceReportsCreateSchema = z.object({
   stationId: z.number().int(),
   userId: z.string().max(255),
   fuelType: z.string(),
@@ -8,9 +8,9 @@ export const price_reportsCreateSchema = z.object({
   hasFuel: z.boolean().optional()
 });
 
-export type Price_reportsCreate = z.infer<typeof price_reportsCreateSchema>;
+export type PriceReportsCreate = z.infer<typeof priceReportsCreateSchema>;
 
-export const price_reportsUpdateSchema = z.object({
+export const priceReportsUpdateSchema = z.object({
   stationId: z.number().int().optional(),
   userId: z.string().max(255).optional(),
   fuelType: z.string().optional(),
@@ -18,4 +18,4 @@ export const price_reportsUpdateSchema = z.object({
   hasFuel: z.boolean().optional()
 });
 
-export type Price_reportsUpdate = z.infer<typeof price_reportsUpdateSchema>;
+export type PriceReportsUpdate = z.infer<typeof priceReportsUpdateSchema>;

@@ -13,7 +13,7 @@ export const stations = pgTable('stations', {
   updatedAt: timestamp('updated_at').defaultNow().notNull()
 });
 
-export const price_reports = pgTable('price_reports', {
+export const priceReports = pgTable('priceReports', {
   id: serial('id').primaryKey(),
   stationId: integer('stationId').notNull(),
   userId: varchar('userId', { length: 255 }).notNull(),
@@ -29,5 +29,5 @@ export const price_reports = pgTable('price_reports', {
 export type Stations = typeof stations.$inferSelect;
 export type NewStations = typeof stations.$inferInsert;
 
-export type Price_reports = typeof price_reports.$inferSelect;
-export type NewPrice_reports = typeof price_reports.$inferInsert;
+export type PriceReports = typeof priceReports.$inferSelect;
+export type NewPriceReports = typeof priceReports.$inferInsert;

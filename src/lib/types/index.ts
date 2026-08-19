@@ -5,7 +5,7 @@ export interface stationsType {
   [key: string]: any;
 }
 
-export interface price_reportsType {
+export interface priceReportsType {
   // Generated from src/lib/schema.ts
   [key: string]: any;
 }

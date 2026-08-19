@@ -11,7 +11,7 @@ export const station = defineSchema('stations', {
   timestamps: true
 });
 
-export const priceReport = defineSchema('price_reports', {
+export const priceReport = defineSchema('priceReports', {
   id: { type: 'serial', primary: true },
   stationId: { type: 'integer', required: true }, 
   userId: { type: 'string', length: 255, required: true },  
