@@ -8,7 +8,10 @@ export const station = defineSchema('stations', {
   lat: { type: 'string', required: true },
   lng: { type: 'string', required: true }
 }, {
-  timestamps: true
+  timestamps: true,
+  relationships: {
+    reports: { type: 'hasMany', model: 'priceReports', foreignKey: 'stationId' }
+  }
 });
 
 export const priceReport = defineSchema('priceReports', {
@@ -19,5 +22,8 @@ export const priceReport = defineSchema('priceReports', {
   pricePerLiter: { type: 'integer', required: true }, 
   hasFuel: { type: 'boolean', default: 'true' }
 }, {
-  timestamps: true
+  timestamps: true,
+  relationships: {
+    station: { type: 'belongsTo', model: 'stations', foreignKey: 'stationId' }
+  }
 });
