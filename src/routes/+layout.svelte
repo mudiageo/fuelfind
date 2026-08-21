@@ -1,5 +1,5 @@
 <script lang="ts">
-  import '../layout.css';
+  import './layout.css';
   import favicon from '#lib/assets/favicon.svg';
   import { authClient } from '$auth/client';
   import { page } from '$app/state';
