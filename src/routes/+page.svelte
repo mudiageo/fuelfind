@@ -28,6 +28,7 @@
 
   let sortBy = $state(page.url.searchParams.get('sort') || 'distance');
   let fuelTypeFilter = $state(page.url.searchParams.get('fuelType') || 'pms');
+  let only24h = $state(page.url.searchParams.get('only24h') === 'true');
 
   onMount(() => {
     // Try to get real location
@@ -51,6 +52,7 @@
     params.set(key, value);
     if (key === 'fuelType') fuelTypeFilter = value;
     if (key === 'sort') sortBy = value;
+    if (key === 'only24h') only24h = value === 'true';
     goto(`?${params.toString()}`);
   }
 
@@ -92,6 +94,18 @@
           <option value="price">Lowest Price</option>
         </select>
       </div>
+
+      <div class="flex items-center pt-5 sm:pt-6">
+        <label class="flex items-center gap-2 text-sm font-medium text-gray-700 cursor-pointer">
+          <input 
+            type="checkbox" 
+            checked={only24h}
+            onchange={(e) => updateFilters('only24h', e.currentTarget.checked ? 'true' : 'false')}
+            class="h-4 w-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
+          />
+          Reported in last 24h
+        </label>
+      </div>
     </div>
     
     <div class="mt-4 pt-3 border-t border-gray-100 text-xs text-gray-500 flex items-center gap-1">
@@ -115,6 +129,11 @@
         );
         return processed;
       });
+
+      if (only24h) {
+        filtered = filtered.filter((s: ProcessedStation) => s.state !== 'outdated' && s.state !== 'no-reports');
+      }
+
       if (sortBy === 'price') {
         filtered.sort((a: ProcessedStation, b: ProcessedStation) => {
           if (!a.displayPrice) return 1;

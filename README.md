@@ -1,42 +1,40 @@
-# sv
+# FuelFind
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+A crowdsourced fuel price and availability finder built for OmniSvelte. FuelFind helps drivers locate stations with fresh, accurate fuel pricing, filtering by distance, fuel type, and report recency.
 
-## Creating a project
+## Features (MVP)
+- **Station List**: See 25+ demo stations sorted by live geolocation distance.
+- **Freshness Aggregation**: Smart price labels ('Recent consensus', 'May be outdated', 'Out of fuel') to help filter noise.
+- **Live Filtering**: Filter by Fuel Type (PMS/Diesel/DPK), max distance, and 24h freshness.
+- **Offline Reliability**: Dexie.js offline queue intercepts price reports submitted with poor connectivity and automatically syncs when reconnected.
+- **Built-in Auth**: Sign in / Sign up via OmniSvelte Better Auth integration.
+- **OmniSvelte Remote Functions**: End-to-end type-safe CRUD operations, powered by `resource()` generator and `omni-svelte/remote`.
 
-If you're seeing this, you've probably already done this step. Congrats!
+## Setup & Running Locally
 
-```sh
-# create a new project
-npx sv create my-app
-```
+1. Install dependencies:
+   ```bash
+   pnpm install
+   ```
 
-To recreate this project with the same configuration:
+2. Generate Database Migrations & Push (if running from scratch):
+   ```bash
+   pnpm exec omni db generate
+   pnpm exec omni db push
+   ```
 
-```sh
-# recreate this project
-npx sv@0.17.0 create --template minimal --types ts --add tailwindcss="plugins:none" --no-install fuelfind
-```
+3. Seed Initial Demo Data:
+   ```bash
+   pnpm dlx tsx src/lib/db/seed.ts
+   ```
 
-## Developing
+4. Start Development Server:
+   ```bash
+   pnpm run dev
+   ```
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```sh
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```sh
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+## Tech Stack
+- **Framework**: OmniSvelte (SvelteKit + Svelte 5 runes)
+- **Styling**: Tailwind CSS v4 + shadcn-svelte
+- **Database**: PostgreSQL (via Drizzle ORM / OmniSvelte ActiveRecord schemas)
+- **Offline Sync**: Dexie.js
