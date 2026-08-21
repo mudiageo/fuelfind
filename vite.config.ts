@@ -1,7 +1,10 @@
 import { omniSvelte } from 'omni-svelte/vite';
 import tailwindcss from '@tailwindcss/vite';
-import adapter from '@sveltejs/adapter-auto';
+import adapterAuto from '@sveltejs/adapter-auto';
+import adapterCloudflare from '@sveltejs/adapter-cloudflare';
 import { defineConfig } from 'vite';
+
+const adapter = process.env.WORKER_CI ? adapterCloudflare() : adapterAuto();
 
 export default defineConfig({
 	plugins: [
