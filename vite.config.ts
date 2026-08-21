@@ -4,7 +4,7 @@ import adapterAuto from '@sveltejs/adapter-auto';
 import adapterCloudflare from '@sveltejs/adapter-cloudflare';
 import { defineConfig } from 'vite';
 
-const adapter = process.env.WORKER_CI ? adapterCloudflare() : adapterAuto();
+const adapter = process.env.WORKER_CI ? adapterCloudflare : adapterAuto;
 
 export default defineConfig({
 	plugins: [
