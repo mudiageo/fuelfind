@@ -1,48 +1,59 @@
 <script lang="ts">
-  import './layout.css';
+  import '../layout.css';
   import favicon from '#lib/assets/favicon.svg';
-  import { authClient } from '$auth/client';
+  import { authClient } from 'omni-svelte/auth/client';
+  import { page } from '$app/state';
+  import { ModeWatcher } from 'mode-watcher';
+  import { Button } from '#lib/components/ui/button';
   
   let { children } = $props();
-  
   const session = authClient.useSession();
   
   async function handleLogout() {
-    await authClient.signOut();
-    window.location.reload();
+    await authClient.signOut({ fetchOptions: { onSuccess: () => window.location.href = '/' }});
   }
 </script>
 
 <svelte:head>
-  <link rel="icon" href={favicon} />
-  <title>FuelFind</title>
+  <link rel="icon" type="image/svg+xml" href={favicon} />
 </svelte:head>
 
-<div class="min-h-screen bg-gray-50 font-sans text-gray-900">
-  <header class="bg-white border-b border-gray-200 sticky top-0 z-10">
+<ModeWatcher />
+
+<div class="min-h-screen bg-background text-foreground flex flex-col font-sans">
+  <header class="sticky top-0 z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border shadow-sm">
     <div class="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
-      <a href="/" class="flex items-center gap-2">
-        <div class="bg-blue-600 text-white p-1.5 rounded-lg">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+      <a href="/" class="flex items-center gap-2 group">
+        <div class="bg-primary text-primary-foreground p-2 rounded-lg group-hover:bg-primary/90 transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+          </svg>
         </div>
         <span class="text-xl font-bold tracking-tight">FuelFind</span>
       </a>
       
-      <nav class="flex items-center gap-4 text-sm font-medium">
+      <nav class="flex items-center gap-3">
         {#if $session.isPending}
-          <div class="w-20 h-4 bg-gray-200 animate-pulse rounded"></div>
+          <div class="h-9 w-20 bg-muted animate-pulse rounded-md"></div>
         {:else if $session.data?.user}
-          <span class="text-gray-600 hidden sm:inline">{$session.data.user.email}</span>
-          <button onclick={handleLogout} class="text-gray-500 hover:text-gray-900">Log out</button>
+          <div class="hidden sm:block text-sm text-muted-foreground mr-2">
+            {$session.data.user.name || $session.data.user.email}
+          </div>
+          <Button variant="outline" size="sm" onclick={handleLogout}>Log Out</Button>
         {:else}
-          <a href="/login" class="text-gray-600 hover:text-gray-900">Log in</a>
-          <a href="/signup" class="bg-gray-900 text-white px-3 py-1.5 rounded-md hover:bg-gray-800 transition-colors">Sign up</a>
+          {#if page.url.pathname !== '/login'}
+            <Button variant="ghost" size="sm" href="/login">Log In</Button>
+          {/if}
+          {#if page.url.pathname !== '/signup'}
+            <Button size="sm" href="/signup">Sign Up</Button>
+          {/if}
         {/if}
       </nav>
     </div>
   </header>
-  
-  <main>
+
+  <main class="flex-1 w-full">
     {@render children()}
   </main>
 </div>

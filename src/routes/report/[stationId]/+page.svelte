@@ -2,9 +2,17 @@
   import { page } from '$app/state';
   import { goto } from '$app/navigation';
   import { createPriceReport, station } from '../../data.remote';
-  import { authClient } from '$auth/client';
-  import { queueReport } from '$lib/db/offline';
+  import { authClient } from 'omni-svelte/auth/client';
+  import { queueReport } from '#lib/db/offline';
   import { onMount } from 'svelte';
+
+  import * as Card from '#lib/components/ui/card';
+  import { Button } from '#lib/components/ui/button';
+  import { Input } from '#lib/components/ui/input';
+  import { Label } from '#lib/components/ui/label';
+  import { Checkbox } from '#lib/components/ui/checkbox';
+  import * as Select from '#lib/components/ui/select';
+  import { ArrowLeft, Loader2, AlertTriangle } from 'lucide-svelte';
 
   let stationId = $derived(page.params.stationId);
   let stationQuery = $derived(station(stationId));
@@ -56,84 +64,104 @@
     }
     submitting = false;
   }
+
+  function getFuelLabel(val: string) {
+    if (val === 'pms') return 'Petrol (PMS)';
+    if (val === 'diesel') return 'Diesel (AGO)';
+    return 'Kerosene (DPK)';
+  }
 </script>
 
-<div class="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md border border-gray-100">
+<div class="max-w-md mx-auto mt-10 p-4 sm:p-0">
   <div class="mb-6">
-    <a href={`/stations/${stationId}`} class="text-blue-600 hover:underline flex items-center gap-1 text-sm">
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+    <Button variant="ghost" size="sm" href={`/stations/${stationId}`} class="gap-1 pl-2 text-muted-foreground hover:text-foreground">
+      <ArrowLeft class="w-4 h-4" />
       Back to Station
-    </a>
+    </Button>
   </div>
 
-  <h1 class="text-2xl font-bold mb-2 text-gray-900">Report Price</h1>
-  
-  {#await stationQuery then record}
-    {#if record}
-      <p class="text-gray-500 mb-6">{record.name}</p>
-    {/if}
-  {/await}
-
-  {#if $session.isPending}
-    <div class="text-center py-4">Loading session...</div>
-  {:else if !$session.data?.user}
-    <div class="bg-yellow-50 text-yellow-800 p-4 rounded-md text-sm border border-yellow-200 mb-4">
-      You must be logged in to submit a report. 
-      <div class="mt-2">
-        <a href="/login" class="font-bold underline">Log In</a> or <a href="/signup" class="font-bold underline">Sign Up</a>
-      </div>
-    </div>
-  {:else}
-    <form onsubmit={handleSubmit} class="space-y-5">
-      <div>
-        <label class="flex items-center space-x-3 bg-gray-50 p-4 rounded-lg border border-gray-200 cursor-pointer hover:bg-gray-100 transition-colors">
-          <input 
-            type="checkbox" 
-            bind:checked={hasFuel}
-            class="h-5 w-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
-          />
-          <span class="font-medium text-gray-900">Station has fuel</span>
-        </label>
-      </div>
-
-      {#if hasFuel}
-        <div>
-          <label class="block mb-1 text-sm font-medium text-gray-700">Fuel Type</label>
-          <select 
-            bind:value={fuelType}
-            class="w-full border border-gray-300 p-2.5 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
-          >
-            <option value="pms">Petrol (PMS)</option>
-            <option value="diesel">Diesel (AGO)</option>
-            <option value="kerosene">Kerosene (DPK)</option>
-          </select>
+  <Card.Root>
+    <Card.Header>
+      <Card.Title class="text-2xl">Report Price</Card.Title>
+      {#await stationQuery then record}
+        {#if record}
+          <Card.Description>{record.name}</Card.Description>
+        {/if}
+      {/await}
+    </Card.Header>
+    <Card.Content>
+      {#if $session.isPending}
+        <div class="flex justify-center py-8">
+          <Loader2 class="w-6 h-6 animate-spin text-muted-foreground" />
         </div>
-        
-        <div>
-          <label class="block mb-1 text-sm font-medium text-gray-700">Price per Liter (₦)</label>
-          <div class="relative">
-            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <span class="text-gray-500 sm:text-sm">₦</span>
+      {:else if !$session.data?.user}
+        <div class="bg-amber-500/10 text-amber-600 dark:text-amber-400 p-4 rounded-lg flex gap-3 border border-amber-500/20">
+          <AlertTriangle class="w-5 h-5 shrink-0 mt-0.5" />
+          <div class="text-sm">
+            <p class="font-medium mb-2">Authentication Required</p>
+            <p class="mb-3 opacity-90">You must be logged in to submit a price report.</p>
+            <div class="flex gap-3">
+              <Button href="/login" variant="outline" size="sm" class="bg-background/50">Log In</Button>
+              <Button href="/signup" size="sm">Sign Up</Button>
             </div>
-            <input 
-              type="number"
-              bind:value={pricePerLiter}
-              required
-              min="1"
-              placeholder="e.g. 650"
-              class="w-full pl-8 border border-gray-300 p-2.5 rounded-md focus:ring-2 focus:ring-blue-500 outline-none" 
-            />
           </div>
         </div>
+      {:else}
+        <form onsubmit={handleSubmit} class="space-y-6">
+          <div class="flex items-center space-x-3 bg-muted/30 p-4 rounded-lg border border-border">
+            <Checkbox id="hasFuel" bind:checked={hasFuel} />
+            <Label for="hasFuel" class="font-medium cursor-pointer flex-1">Station currently has fuel</Label>
+          </div>
+
+          {#if hasFuel}
+            <div class="space-y-3">
+              <Label>Fuel Type</Label>
+              <Select.Root type="single" bind:value={fuelType}>
+                <Select.Trigger class="w-full">
+                  {getFuelLabel(fuelType)}
+                </Select.Trigger>
+                <Select.Content>
+                  <Select.Item value="pms">Petrol (PMS)</Select.Item>
+                  <Select.Item value="diesel">Diesel (AGO)</Select.Item>
+                  <Select.Item value="kerosene">Kerosene (DPK)</Select.Item>
+                </Select.Content>
+              </Select.Root>
+            </div>
+            
+            <div class="space-y-3">
+              <Label for="price">Price per Liter (₦)</Label>
+              <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <span class="text-muted-foreground sm:text-sm font-medium">₦</span>
+                </div>
+                <Input 
+                  id="price"
+                  type="number"
+                  bind:value={pricePerLiter}
+                  required
+                  min="1"
+                  placeholder="e.g. 650"
+                  class="pl-8"
+                />
+              </div>
+            </div>
+          {/if}
+          
+          <Button 
+            type="submit" 
+            disabled={submitting}
+            class="w-full"
+            size="lg"
+          >
+            {#if submitting}
+              <Loader2 class="w-4 h-4 mr-2 animate-spin" />
+              Submitting...
+            {:else}
+              Submit Report
+            {/if}
+          </Button>
+        </form>
       {/if}
-      
-      <button 
-        type="submit" 
-        disabled={submitting}
-        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium p-3 rounded-md transition-colors disabled:opacity-70"
-      >
-        {submitting ? 'Submitting...' : 'Submit Report'}
-      </button>
-    </form>
-  {/if}
+    </Card.Content>
+  </Card.Root>
 </div>
