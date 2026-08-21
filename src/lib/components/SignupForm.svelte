@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { signUp } from 'omni-svelte/auth/client';
+  import { signUp } from '$auth/client';
   
   import { Button } from '#lib/components/ui/button';
   import { Input } from '#lib/components/ui/input';
