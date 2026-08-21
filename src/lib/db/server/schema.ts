@@ -31,3 +31,16 @@ export type NewStations = typeof stations.$inferInsert;
 
 export type PriceReports = typeof priceReports.$inferSelect;
 export type NewPriceReports = typeof priceReports.$inferInsert;
+
+import { relations } from 'drizzle-orm';
+
+export const stationsRelations = relations(stations, ({ many }) => ({
+  reports: many(priceReports)
+}));
+
+export const priceReportsRelations = relations(priceReports, ({ one }) => ({
+  station: one(stations, {
+    fields: [priceReports.stationId],
+    references: [stations.id]
+  })
+}));

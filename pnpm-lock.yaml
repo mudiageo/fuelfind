@@ -217,8 +217,8 @@ importers:
         specifier: ^1.1.0
         version: 1.1.0(svelte@5.56.9)
       omni-svelte:
-        specifier: next
-        version: 0.2.2-next.0(@better-fetch/fetch@1.1.21)(@cloudflare/workers-types@5.20260820.1)(@prisma/client@5.22.0)(@sveltejs/kit@3.0.0-next.24(@sveltejs/vite-plugin-svelte@7.3.0(svelte@5.56.9)(vite@8.2.1(@types/node@26.2.0)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.12)))(svelte@5.56.9)(typescript@6.0.3)(vite@8.2.1(@types/node@26.2.0)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.12)))(@types/pg@8.21.0)(better-call@1.1.8(zod@4.4.3))(better-sqlite3@12.11.1)(drizzle-kit@0.31.10)(jose@6.2.9)(kysely@0.28.17)(nanostores@1.5.1)(pg@8.23.0)(supports-color@10.2.2)(svelte@5.56.9)
+        specifier: 0.2.2-next.1
+        version: 0.2.2-next.1(@better-fetch/fetch@1.1.21)(@cloudflare/workers-types@5.20260820.1)(@prisma/client@5.22.0)(@sveltejs/kit@3.0.0-next.24(@sveltejs/vite-plugin-svelte@7.3.0(svelte@5.56.9)(vite@8.2.1(@types/node@26.2.0)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.12)))(svelte@5.56.9)(typescript@6.0.3)(vite@8.2.1(@types/node@26.2.0)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.12)))(@types/pg@8.21.0)(better-call@1.1.8(zod@4.4.3))(better-sqlite3@12.11.1)(drizzle-kit@0.31.10)(jose@6.2.9)(kysely@0.28.17)(nanostores@1.5.1)(pg@8.23.0)(supports-color@10.2.2)(svelte@5.56.9)
     devDependencies:
       '@fontsource-variable/inter':
         specifier: ^5.3.0
@@ -2890,8 +2890,8 @@ packages:
   ohash@2.0.12:
     resolution: {integrity: sha512-65S/5gk9YSsaRjcyf7Nfa6h/d3E8/1gslpXfI4W7Dxn/oap8IKRuNT5VXkLQ1YFKIEg4apRY4Pj6aiwFzrDdmw==}
 
-  omni-svelte@0.2.2-next.0:
-    resolution: {integrity: sha512-hE1iurp0NLl+dkbhigBx16PS+znjpHpcharVuzWBXThrurXJo0bdmt2h0eSiHue05EFotsWGix3Td8w1bEonGw==}
+  omni-svelte@0.2.2-next.1:
+    resolution: {integrity: sha512-OAR1V3otmy5lFkMNURB1euqulDpuRKbMCkWhqG41rV0J5Dndld7oUVuylcb9ztt+rBHSsQ+3WSqKzw5iGZAg0g==}
     hasBin: true
     peerDependencies:
       '@sveltejs/kit': ^2.27.0
@@ -5356,7 +5356,7 @@ snapshots:
 
   ohash@2.0.12: {}
 
-  omni-svelte@0.2.2-next.0(@better-fetch/fetch@1.1.21)(@cloudflare/workers-types@5.20260820.1)(@prisma/client@5.22.0)(@sveltejs/kit@3.0.0-next.24(@sveltejs/vite-plugin-svelte@7.3.0(svelte@5.56.9)(vite@8.2.1(@types/node@26.2.0)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.12)))(svelte@5.56.9)(typescript@6.0.3)(vite@8.2.1(@types/node@26.2.0)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.12)))(@types/pg@8.21.0)(better-call@1.1.8(zod@4.4.3))(better-sqlite3@12.11.1)(drizzle-kit@0.31.10)(jose@6.2.9)(kysely@0.28.17)(nanostores@1.5.1)(pg@8.23.0)(supports-color@10.2.2)(svelte@5.56.9):
+  omni-svelte@0.2.2-next.1(@better-fetch/fetch@1.1.21)(@cloudflare/workers-types@5.20260820.1)(@prisma/client@5.22.0)(@sveltejs/kit@3.0.0-next.24(@sveltejs/vite-plugin-svelte@7.3.0(svelte@5.56.9)(vite@8.2.1(@types/node@26.2.0)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.12)))(svelte@5.56.9)(typescript@6.0.3)(vite@8.2.1(@types/node@26.2.0)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.12)))(@types/pg@8.21.0)(better-call@1.1.8(zod@4.4.3))(better-sqlite3@12.11.1)(drizzle-kit@0.31.10)(jose@6.2.9)(kysely@0.28.17)(nanostores@1.5.1)(pg@8.23.0)(supports-color@10.2.2)(svelte@5.56.9):
     dependencies:
       '@better-auth/cli': 1.4.21(@better-fetch/fetch@1.1.21)(@cloudflare/workers-types@5.20260820.1)(@sveltejs/kit@3.0.0-next.24(@sveltejs/vite-plugin-svelte@7.3.0(svelte@5.56.9)(vite@8.2.1(@types/node@26.2.0)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.12)))(svelte@5.56.9)(typescript@6.0.3)(vite@8.2.1(@types/node@26.2.0)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.12)))(better-call@1.1.8(zod@4.4.3))(drizzle-kit@0.31.10)(jose@6.2.9)(kysely@0.28.17)(nanostores@1.5.1)(postgres@3.4.9)(supports-color@10.2.2)(svelte@5.56.9)
       '@clack/prompts': 1.7.0

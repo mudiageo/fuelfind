@@ -38,7 +38,7 @@
     "dexie": "^4.4.5",
     "drizzle-orm": "^0.45.2",
     "mode-watcher": "^1.1.0",
-    "omni-svelte": "next"
+    "omni-svelte": "0.2.2-next.1"
   },
   "devEngines": {
     "packageManager": {

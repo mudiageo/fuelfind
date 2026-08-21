@@ -4,4 +4,4 @@ allowBuilds:
   esbuild: true
   workerd: true
 minimumReleaseAgeExclude:
-  - omni-svelte@0.2.2-next.0
+  - omni-svelte@0.2.2-next.0 || 0.2.2-next.1

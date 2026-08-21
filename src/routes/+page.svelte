@@ -62,7 +62,7 @@
     }
     
     if (changed) {
-      goto(`?${params.toString()}`, { keepFocus: true, noScroll: true });
+      goto(`?${params.toString()}`, { reset: false });
     }
   });
 
