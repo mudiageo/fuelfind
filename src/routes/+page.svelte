@@ -2,17 +2,29 @@
   import { onMount } from 'svelte';
   import { page } from '$app/state';
   import { goto } from '$app/navigation';
-  import { fromURL } from 'omni-svelte/remote';
   import { stations } from './data.remote';
   import { calculateDistance } from '$lib/utils/distance';
   import { processStationFreshness, type ProcessedStation } from '$lib/utils/freshness';
 
+  function fromURL(url: URL) {
+    const params = url.searchParams;
+    const pageVal = params.get('page');
+    const perPageVal = params.get('perPage') || params.get('per_page');
+    const searchVal = params.get('search') || params.get('q');
+    return {
+      page: pageVal ? parseInt(pageVal, 10) : undefined,
+      perPage: perPageVal ? parseInt(perPageVal, 10) : undefined,
+      search: searchVal || undefined
+    };
+  }
+
   // Default test location (Ring Road, Benin City)
   let userLat = $state(6.3330);
+  let userLng = $state(5.6250);
   let locationStatus = $state('Using default location (Ring Road, Benin City)');
   
   // Reactively fetch stations based on URL parameters
-  let stationsQuery = $derived(stations(fromURL(page.url)));
+  let stationsQuery = $derived(stations(fromURL(new URL(page.url.toString()))));
 
   let sortBy = $state(page.url.searchParams.get('sort') || 'distance');
   let fuelTypeFilter = $state(page.url.searchParams.get('fuelType') || 'pms');
@@ -35,7 +47,7 @@
   });
 
   function updateFilters(key: string, value: string) {
-    const params = new URLSearchParams(page.url.searchParams);
+    const params = new URLSearchParams(page.url.searchParams.toString());
     params.set(key, value);
     if (key === 'fuelType') fuelTypeFilter = value;
     if (key === 'sort') sortBy = value;
@@ -104,13 +116,13 @@
         return processed;
       });
       if (sortBy === 'price') {
-        filtered.sort((a, b) => {
+        filtered.sort((a: ProcessedStation, b: ProcessedStation) => {
           if (!a.displayPrice) return 1;
           if (!b.displayPrice) return -1;
           return a.displayPrice - b.displayPrice;
         });
       } else {
-        filtered.sort((a, b) => (a.distanceKm || 0) - (b.distanceKm || 0));
+        filtered.sort((a: ProcessedStation, b: ProcessedStation) => (a.distanceKm || 0) - (b.distanceKm || 0));
       }
       return filtered;
     })()}
