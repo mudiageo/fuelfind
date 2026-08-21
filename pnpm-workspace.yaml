@@ -2,5 +2,6 @@ allowBuilds:
   '@prisma/client': true
   better-sqlite3: true
   esbuild: true
+  workerd: true
 minimumReleaseAgeExclude:
   - omni-svelte@0.2.2-next.0
