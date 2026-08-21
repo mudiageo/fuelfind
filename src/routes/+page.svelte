@@ -2,7 +2,7 @@
   import { onMount } from 'svelte';
   import { page } from '$app/state';
   import { goto } from '$app/navigation';
-  import { fromURL } from 'omni-svelte/remote';
+  import { fromURL } from '#lib/utils/fromURL';
   import { stations } from './data.remote';
   import { calculateDistance } from '#lib/utils/distance';
   import { processStationFreshness, type ProcessedStation } from '#lib/utils/freshness';
@@ -19,8 +19,8 @@
   let userLng = $state(5.6250);
   let locationStatus = $state('Using default location (Benin City)');
   
-  // Reactively fetch stations based on URL parameters
-  let stationsQuery = $derived(stations(fromURL(new URL(page.url.toString()))));
+  // Reactively fetch stations based on URL parameters using our custom fromURL helper
+  let stationsQuery = $derived(stations(fromURL(page.url)));
 
   let sortBy = $state(page.url.searchParams.get('sort') || 'distance');
   let fuelTypeFilter = $state(page.url.searchParams.get('fuelType') || 'pms');
