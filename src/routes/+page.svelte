@@ -12,7 +12,7 @@
   import * as Select from '#lib/components/ui/select';
   import { Checkbox } from '#lib/components/ui/checkbox';
   import { Label } from '#lib/components/ui/label';
-  import { MapPin, ArrowRight, Loader2, Info } from 'lucide-svelte';
+  import { MapPin, ArrowRight, Loader2, Info } from '@lucide/svelte';
 
   // Default test location (Ring Road, Benin City)
   let userLat = $state(6.3330);

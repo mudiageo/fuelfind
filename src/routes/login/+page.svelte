@@ -1,12 +1,12 @@
 <script lang="ts">
-  import { signIn } from 'omni-svelte/auth/client';
+  import { signIn } from '$auth/client';
   import { goto } from '$app/navigation';
   
   import * as Card from '#lib/components/ui/card';
   import { Button } from '#lib/components/ui/button';
   import { Input } from '#lib/components/ui/input';
   import { Label } from '#lib/components/ui/label';
-  import { Loader2 } from 'lucide-svelte';
+  import { Loader2 } from '@lucide/svelte';
   
   let email = $state('');
   let password = $state('');

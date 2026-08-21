@@ -2,7 +2,7 @@
   import { page } from '$app/state';
   import { goto } from '$app/navigation';
   import { createPriceReport, station } from '../../data.remote';
-  import { authClient } from 'omni-svelte/auth/client';
+  import { authClient } from '$auth/client';
   import { queueReport } from '#lib/db/offline';
   import { onMount } from 'svelte';
 
@@ -12,7 +12,7 @@
   import { Label } from '#lib/components/ui/label';
   import { Checkbox } from '#lib/components/ui/checkbox';
   import * as Select from '#lib/components/ui/select';
-  import { ArrowLeft, Loader2, AlertTriangle } from 'lucide-svelte';
+  import { ArrowLeft, Loader2, AlertTriangle } from '@lucide/svelte';
 
   let stationId = $derived(page.params.stationId);
   let stationQuery = $derived(station(stationId));

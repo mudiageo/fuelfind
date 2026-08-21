@@ -6,7 +6,7 @@
   import * as Card from '#lib/components/ui/card';
   import { Badge } from '#lib/components/ui/badge';
   import { Button } from '#lib/components/ui/button';
-  import { ArrowLeft, MapPin, Clock, Loader2, Fuel } from 'lucide-svelte';
+  import { ArrowLeft, MapPin, Clock, Loader2, Fuel } from '@lucide/svelte';
 
   let stationId = $derived(page.params.id);
   let stationQuery = $derived(station(stationId));
